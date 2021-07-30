@@ -13,6 +13,7 @@
         <!-- Two columns -->
         <div class="row row-table products-wrapper">
 
+          <?php if(!empty($products)): ?>
             <!-- Left column -->
             <div class="col-md-3 filter-col aside filter-block">
                     <?php $filterObj = new \app\widgets\filter\Filter($filterData);
@@ -108,42 +109,6 @@
 
                 </div>
 
-                <!-- Banners
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="#" class="banner-wrap">
-                            <div class="banner style-9 autosize-text image-hover-scale" data-fontratio="6.4">
-                                <img src="images/banners/banner-category-1.jpg" alt="Banner">
-                                <div class="banner-caption vertb">
-                                    <div class="vert-wrapper">
-                                        <div class="vert">
-                                            <div class="text-1 text-hoverslide" data-hcolor="#ffffff"><span><span class="text">Brands favorite women</span><span class="hoverbg"></span></span>
-                                            </div>
-                                            <div class="text-2">Minus id quod maxime placeat facere possimus omnis voluptas assumenda</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#" class="banner-wrap">
-                            <div class="banner style-10 autosize-text image-hover-scale" data-fontratio="6.4">
-                                <img src="images/banners/banner-category-2.jpg" alt="Banner 2">
-                                <div class="banner-caption vertb horc">
-                                    <div class="vert-wrapper">
-                                        <div class="vert">
-                                            <div class="text-1">You deserve the best</div>
-                                            <div class="banner-btn text-hoverslide" data-hcolor="#f82e56"><span><span class="text">Shop Now</span><span class="hoverbg"></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                /Banners -->
                 <!-- Categories Info -->
                 <div class="info-block">
                    <?=$category->text?>
@@ -213,6 +178,16 @@
                 <div id="spinningSquaresG_8" class="spinningSquaresG"></div>
             </div>
             <!-- loader -->
+
+          <?php else: ?>
+              <div class="page-title">
+                  <div class="title center">
+                      <h1><?=$category->title?></h1>
+                  </div>
+              </div>
+              <h2 class="text-center category-no-products"> В данной категории еще нет товаров</h2>
+
+          <?php endif; ?>
 
         </div>
         <div class="ymax"></div>

@@ -13,7 +13,11 @@ class SearchController extends AppController{
         if($this->isAjax()){
             $query = !empty(trim($_GET['query'])) ? trim($_GET['query']) : null;
             if($query){
-                $products = R::getAll("SELECT id, title FROM product WHERE status = 'visible' AND title LIKE ? LIMIT 11", ["%{$query}%"]);
+              $products = R::getAll("SELECT product.id, product.title, GROUP_CONCAT(product_base_img.img SEPARATOR ',') AS base_img,
+                                       product.price, product.alias
+                                       FROM product 
+                                       LEFT JOIN product_base_img ON product_base_img.product_id = product.id
+                                        WHERE product.status = 'visible' AND product.title LIKE ? GROUP BY product.id LIMIT 11", ["%{$query}%"]);
                 echo json_encode($products);
             }
         }

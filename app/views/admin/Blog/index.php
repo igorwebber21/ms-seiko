@@ -35,7 +35,7 @@
                                     <td>
                                         <a href="<?=ADMIN;?>/blog/edit?id=<?=$article['id'];?>">
                                           <?php if($article['img_preview']): ?>
-                                              <img width="50" src="<?=BLOGPREVIEWIMG.$article['img_preview'];?>" alt="<?=$product['title'];?>" />
+                                              <img width="50" src="<?=BLOGPREVIEWIMG.$article['img_preview'];?>" alt="<?=$article['title'];?>" />
                                           <?php else: ?>
                                               <img width="50" src="<?=PRODUCTIMG?>no_image.jpg" alt="">
                                           <?php endif; ?>

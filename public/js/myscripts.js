@@ -25,14 +25,39 @@ $(function(){
     products.initialize();
 
     $("#typeahead").typeahead({
-        // hint: false,
-        highlight: true
+        hint: false,
+        highlight: true,
+        minLength: 1
     },{
         name: 'products',
         display: 'title',
         limit: 10,
-        source: products
-    });
+        source: products.ttAdapter(),
+        templates: {
+
+              empty: [
+                  '<div class="list-group search-results-dropdown"><div class="list-group-item no-results"> Ничего не найдено...</div></div>'
+              ],
+              header: [
+                  '<div class="list-group search-results-dropdown">'
+              ],
+              suggestion: function (data) {
+
+                  var searchProductImgs = data.base_img.split(',');
+
+                  console.log('data', data);
+                  //	$("#typeahead").val(data._query);
+
+                  return '<a href="/product/' + data.alias + '" class="list-group-item">' +
+                    '<span class="left"><img width="40" src="' + base_product_img + searchProductImgs[0] + '" alt="' + data.title + '" />'
+                    + '</span>'
+                    + '<span class="search-results-title">' + data.title +  '</span><span class="search-results-price">' + data.price + ' грн.</span></a>'
+              }
+
+          }
+      }
+
+    );
 
     $('#typeahead').bind('typeahead:select', function(ev, suggestion) {
         // console.log(suggestion);
@@ -871,7 +896,7 @@ $("#changePasswordForm").submit(function () {
     $('body').on('click', '.add-to-cart', function(e){
         e.preventDefault();
         var id = $(this).data('id'),
-            qty = $('.quantity input').val() ? $('.quantity input').val() : 1,
+            qty = $('input.qty-input').val() ? $('input.qty-input').val() : 1,
             mod = $('.available select').val();
 
         $.ajax({

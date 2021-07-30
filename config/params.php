@@ -12,7 +12,7 @@ return [
     'smtp_port' => '2525',
     'smtp_protocol' => 'ssl',
     'smtp_login' => 'igorwebber21@ukr.net',
-    'smtp_password' => 'AHEUTsz31MDopRsU',
+    'smtp_password' => 'gSTdpiwNSeQjNsTU',
 
     'img_width' => 390,
     'img_height' => 480,

@@ -105,7 +105,7 @@
                                 <div class="qty qty-changer">
                                     <fieldset>
                                         <input type="button" value="&#8210;" class="decrease">
-                                        <input type="text" class="qty-input" value="2" data-min="0">
+                                        <input type="text" class="qty-input" value="1" data-min="0">
                                         <input type="button" value="+" class="increase">
                                     </fieldset>
                                 </div>
@@ -122,19 +122,22 @@
                                             <span class="toggle">Поделиться</span>
                                             <ul class="social-list">
                                                 <li>
-                                                    <a href="#" class="icon icon-google google"></a>
+                                                    <a class="icon icon-vk fa-vk share-btn-vk" style="background-color: #509FF5; border-color: #509FF5;"
+                                                       href="https://vk.com/share.php?url=<?=PATH?>/product/<?=$product['alias']?>" target="_blank" onclick="return Share.me(this);"></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" class="icon icon-fancy fancy"></a>
+                                                    <a class="icon icon-linkedin linkedin share-btn-in" href="https://www.linkedin.com/cws/share?url=<?=PATH?>/product/<?=$product['alias']?>" target="_blank" onclick="return Share.me(this);">
+                                                    </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" class="icon icon-pinterest pinterest"></a>
+                                                    <a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Ffiddle.jshell.net%2F_display%2F&text=[TITLE]&url=<?=PATH?>/product/<?=$product['alias']?>"
+                                                       class="icon icon-twitter-logo twitter"  target="_blank" onclick="return Share.me(this)">
+                                                    </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" class="icon icon-twitter-logo twitter"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="icon icon-facebook-logo facebook"></a>
+                                                    <a class="icon icon-facebook-logo facebook share-btn-fb"
+                                                       href="http://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=[TITLE]&p%5Bsummary%5D=[TEXT]&p%5Burl%5D=<?=PATH?>/product/<?=$product['alias']?>&p%5Bimages%5D%5B0%5D=[IMAGE]"
+                                                       target="_blank" onclick="return Share.me(this);"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -163,150 +166,7 @@
     <div class="block">
         <div class="tabaccordion">
             <div class="container">
-                <!-- Nav tabs -->
-                <ul class="nav-tabs product-tab" role="tablist">
-                    <li><a href="#Tab1" role="tab" data-toggle="tab">Описание</a></li>
-                    <li><a href="#Tab2" role="tab" data-toggle="tab">Замеры</a></li>
-                    <li><a href="#Tab3" role="tab" data-toggle="tab">Размерная сетка</a></li>
-                    <li><a href="#Tab4" role="tab" data-toggle="tab">Отправка</a></li>
-                    <li><a href="#Tab5" role="tab" data-toggle="tab">Гарантия и возврат</a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="Tab1">
-                        <p>Брюки из коллекции Medicine. Модель выполнена из гладкой ткани.</p>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <tbody>
-                                <tr>
-                                    <td><strong>Крой </strong></td>
-                                    <td>slim</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Карманы</strong></td>
-                                    <td>Прорезные карманы</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Застегивается</strong></td>
-                                    <td>На пуговицу и молнию</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Фасон</strong></td>
-                                    <td>Приталенный</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Материал</strong></td>
-                                    <td>Ткань с эластаном</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Состав</strong></td>
-                                    <td>2% Эластан, 98% Хлопок</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="Tab2">
-                        <h3 class="custom-color">Параметры указаны для размера - <span>31</span></h3>
-                        <table class="table table-bordered table-striped">
-                            <tbody>
-                            <tr>
-                                <td><strong>Ширина по поясу </strong></td>
-                                <td>42 см</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Полуобхват бедер </strong></td>
-                                <td>51 см</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Высота талии </strong></td>
-                                <td>26 см</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Ширина штанины снизу </strong></td>
-                                <td>42 см</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Ширина по поясу </strong></td>
-                                <td>17 см</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Ширина штанины сверху </strong></td>
-                                <td>27 см</td>
-                            </tr><tr>
-                                <td><strong>Длина </strong></td>
-                                <td>104 см</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="Tab3">
-                        <h3 class="custom-color">Размерная сетка</h3>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <td><strong>РАЗМЕР</strong></td>
-                                    <td>
-                                        <ul class="params-row">
-                                            <li>S</li>
-                                            <li>M</li>
-                                            <li>L</li>
-                                            <li>XL</li>
-                                            <li>XXL</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>ОБХВАТ ТАЛИИ, см</strong></td>
-                                    <td>
-                                        <ul class="params-row">
-                                            <li>78-82</li>
-                                            <li>83-87</li>
-                                            <li>88-92</li>
-                                            <li>93-97</li>
-                                            <li>98-102</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>ВНУТРЕННЯЯ ДЛИНА ЩИКОЛОТКИ, см</strong></td>
-                                    <td>
-                                        <ul class="params-row">
-                                            <li>84</li>
-                                            <li>84</li>
-                                            <li>86</li>
-                                            <li>86</li>
-                                            <li>86</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="Tab4">
-                        <p>Отправка товара происходит в день после оформления заказа, при условии, что заказ оформлен до 16:00</p>
-                        <p>Срок доставки 1-3 дня по Украине в зависимости от графика перевозчика.</p>
-                        <p>Доставка осуществляется Новой Почтой или УкрПочтой</p>
-                        <p>Подробнее о доставке и оплате читайте <a href="dostavka-i-oplata"><strong>тут</strong></a>.</p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="Tab5">
-                        <p>
-                            Вы вправе вернуть или обменять товар в течении 14 дней с момента получения заказа.
-                        </p>
-                        <p>
-                            При обмене или возврате нового изделия пересылку оплачивает покупатель (или продавец, но в таком случае цена доставки будет вычтена из суммы возврата средств)
-                        </p>
-                        <p>
-                            Обмену и возврату подлежат: изделия, которые не использовались; при наличии всех товарных ярлыков и бирок; изделия, которые невозможно эксплуатировать из-за выявленных дефектов.
-                        </p>
-                        <p>
-                            Подробнее о возврате читайте <a href="dostavka-i-oplata"><strong>тут</strong></a>.
-                        </p>
-                    </div>
-                </div>
+              <?=$product->content;?>
             </div>
         </div>
     </div>

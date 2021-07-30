@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?=$this->getMeta();?>
+    <?//=//$this->getMeta();?>
     <meta name="author" content="BigSteps">
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
@@ -240,13 +240,13 @@
                                     <div class="toggle-arrow"></div>
                                 </div>
                                 <div class="collapsed-content">
+                                    <?php if($pages): ?>
                                     <ul class="marker-list">
-                                        <li><a href="?v=oplata-i-dostavka">Оплата и доставка</a></li>
-                                        <li><a href="?v=faq">Вопросы и ответы</a></li>
-                                        <li><a href="?v=vozvrat">Возврат</a></li>
-                                        <li><a href="?v=contact">Контакты</a></li>
-                                        <li><a href="?v=about">О нас</a></li>
+                                        <?php foreach ($pages as $page): ?>
+                                        <li><a href="/<?=$page['alias']?>"><?=$page['title']?></a></li>
+                                        <?php endforeach; ?>
                                     </ul>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -258,11 +258,14 @@
                                 </div>
                                 <div class="collapsed-content">
                                     <ul class="marker-list">
-                                        <li><a href="about.html">Регистрация</a></li>
-                                        <li><a href="blog.html">История покупок</a></li>
-                                        <li><a href="search.html">Мои данные</a></li>
-                                        <li><a href="contact.html">Адрес доставки</a></li>
-                                        <li><a href="faq.html">Избранное</a></li>
+                                      <?php  $hrefAttrs = !(isset($_SESSION['user']) && $_SESSION['user'])
+                                          ? 'href="#modalUserAuth" data-toggle="modal"' : 'href="user/cabinet"';  ?>
+
+                                        <li><a href="user/signup">Регистрация</a></li>
+                                        <li><a <?=$hrefAttrs?>>История покупок</a></li>
+                                        <li><a <?=$hrefAttrs?>>Мои данные</a></li>
+                                        <li><a <?=$hrefAttrs?>>Адрес доставки</a></li>
+                                        <li><a <?=$hrefAttrs?>>Избранное</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -490,6 +493,8 @@ $newPriceSliderEnd = isset($_GET['maxPrice']) && $_GET['maxPrice'] > 0 ? $_GET['
         symbolRight = ' <?=$curr['symbol_right']?>';
         newPriceSliderStart = ' <?=$newPriceSliderStart?>',
         newPriceSliderEnd = ' <?=$newPriceSliderEnd?>';
+
+    var base_product_img = '<?=UPLOAD_PRODUCT_BASE?>';
 </script>
 
 <!-- jQuery Scripts  -->

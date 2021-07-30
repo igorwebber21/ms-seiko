@@ -58,7 +58,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>ES</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Easy</b>Shop</span>
+            <span class="logo-lg"><b>Mega</b>Shop</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -404,6 +404,17 @@
                     </ul>
                 </li>
                 <li class="treeview">
+                    <a href="#"><i class="fa fa-list-alt"></i> <span>Страницы</span>
+                        <span class="pull-right-container">
+                             <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="<?= ADMIN ?>/pages">Список страниц</a></li>
+                        <li><a href="<?= ADMIN ?>/pages/add">Добавить страницу</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
                     <a href="#"><i class="fa fa-list-alt"></i> <span>Блог</span>
                         <span class="pull-right-container">
                              <i class="fa fa-angle-left pull-right"></i>
@@ -438,8 +449,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
         </div>
-        <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-        reserved.
+        <strong>Copyright © 2020-2021 <a href="https://megashop.od.ua">MegaShop</a>.</strong> Все права защищены.
     </footer>
 
     <!-- Control Sidebar -->
@@ -701,7 +711,7 @@ $logs = RedBeanPHP\R::getDatabaseAdapter()
     ->getDatabase()
     ->getLogger();
 
-debug( $logs->grep( 'SELECT' ) );
+//debug( $logs->grep( 'SELECT' ) );
 ?>
 
 </body>

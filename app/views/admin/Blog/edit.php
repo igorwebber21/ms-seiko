@@ -1,12 +1,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Добавить статью
+    Изменить статью
   </h1>
   <ol class="breadcrumb">
     <li><a href="<?=ADMIN;?>"><i class="fa fa-dashboard"></i> Главная</a></li>
     <li><a href="<?=ADMIN;?>/blog">Список статей</a></li>
-    <li class="active">Новая статья</li>
+    <li class="active">Изменить статью</li>
   </ol>
 </section>
 

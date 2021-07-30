@@ -248,7 +248,7 @@ $(".select2.related-products").select2({
 // Replace the <textarea id="editor1"> with a CKEditor
 // instance, using default configuration.
 //CKEDITOR.replace('editorProduct');
-$('#editorProduct, .categoryForm #text, .articleForm #text').ckeditor();
+$('.categoryForm #text, .articleForm #text').ckeditor();
 
 
 //iCheck for checkbox and radio inputs

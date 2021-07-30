@@ -130,7 +130,7 @@
 
                         <div class="form-group has-feedback">
                             <label for="content">Контент</label>
-                            <textarea name="content" id="editorProduct" cols="80" rows="10"><?=$product->content;?></textarea>
+                            <textarea class="form-control" name="content" id="editorProduct" cols="80" rows="30"><?=$product->content;?></textarea>
                         </div>
 
                         <div class="form-group form-section-checkboxes form-section-bmt">
