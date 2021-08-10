@@ -49,7 +49,7 @@
     </li>
     <?php else:?>
     <li class="mega-dropdown">
-            <a href="category.html"><?php echo $category['title']?></a>
+            <a href="category/<?php echo $category['alias']?>"><?php echo $category['title']?></a>
             <div class="sub-menu">
                 <div class="container">
 
@@ -58,18 +58,18 @@
                     foreach ($category['childs'] as $subcat): ?>
                         <!-- megamenu column 1 -->
                         <div class="col">
-                            <a class="category-image" href="#"><img src="<?=CATEGORYIMG.$subcat['img']?>" alt /></a>
-                            <div class="category-title title-border"><a href="#"><?=$subcat['title']?><span class="menu-label">HOT</span></a></div>
+                            <a class="category-image" href="category/<?=$subcat['alias']?>"><img src="<?=CATEGORYIMG.$subcat['img']?>" alt /></a>
+                            <div class="category-title title-border"><a href="category/<?=$subcat['alias']?>"><?=$subcat['title']?><span class="menu-label">HOT</span></a></div>
 
                             <div class="flex top end">
                                 <?php if(isset($subcat['childs'])):
                                     foreach ($subcat['childs'] as $item): ?>
                                 <div class="megamenu-categories-flex-3">
-                                    <a href="#" class="subcategory-title"><?php echo $item['title']?></a>
+                                    <a href="category/<?=$item['alias']?>" class="subcategory-title"><?php echo $item['title']?></a>
                                     <ul class="category-links">
                                         <?php if(isset($item['childs'])):
                                             foreach ($item['childs'] as $subitem): ?>
-                                            <li><a href="#"><?=$subitem['title']?></a></li>
+                                            <li><a href="category/<?=$subitem['alias']?>"><?=$subitem['title']?></a></li>
                                         <?php endforeach; endif; ?>
                                     </ul>
                                 </div>

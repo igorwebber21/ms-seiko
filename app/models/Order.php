@@ -24,7 +24,9 @@ class Order extends AppModel
         $order_id = R::store($order);
         self::saveOrderProduct($order_id);
 
-        self::saveOrderDelivery($order_id, $data);
+        if(isset($data['deliveryMethod'])){
+          self::saveOrderDelivery($order_id, $data);
+        }
 
         return $order_id;
     }

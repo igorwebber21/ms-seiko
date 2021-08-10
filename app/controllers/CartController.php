@@ -12,54 +12,51 @@
         // добавить в корзину
         public function addAction()
         {
-            //debug($_GET, 1);
-            $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-            $qty = !empty($_GET['qty']) ? (int)$_GET['qty'] : null;
-            $mod_id = !empty($_GET['mod']) ? (int)$_GET['mod'] : null;
-            $mod = null;
-            if($id){
-                $product =  R::findOne('product', 'id = ?', [$id]);
+          //debug($_GET, 1);
+          $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
+          $qty = !empty($_GET['qty']) ? (int)$_GET['qty'] : null;
+          $mod = !empty($_GET['mod']) ? $_GET['mod'] : null;
 
-                if(!$product){
-                    return false;
-                }
-                if($mod_id){
-                    $mod = R::findOne('modification', 'id = ? AND product_id = ?', [$mod_id, $id]);
-                }
+          if($id){
 
+            $product =  R::getRow("SELECT product.*, GROUP_CONCAT(product_base_img.img SEPARATOR ',') AS base_img
+                                       FROM product 
+                                       LEFT JOIN product_base_img ON product_base_img.product_id = product.id
+                                       WHERE product.id = ".$id);
+
+            if(!$product){
+              return false;
             }
 
-            $cart = new Cart();
-            $cart->addToCart($product, $qty, $mod);
+          }
 
-            $this->isAjax() ? $this->showAction() : redirect();
+          $cart = new Cart();
+          $cart->addToCart($product, $qty, $mod);
+
+          $this->isAjax() ? $this->showAction() : redirect();
         }
 
-        public function changeAction()
-        {
-            $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-            $operation = !empty($_GET['operation']) ? $_GET['operation'] : null;
+      public function changeAction()
+      {
+        $prodData = !empty($_GET['id']) ? $_GET['id'] : null;
+        $operation = !empty($_GET['operation']) ? $_GET['operation'] : null;
 
-            $mod_id = !empty($_GET['mod']) ? (int)$_GET['mod'] : null;
-            $mod = null;
-            if($id){
-                $product =  R::findOne('product', 'id = ?', [$id]);
+        $id = explode('-', $prodData)[0];
 
-                if(!$product){
-                    return false;
-                }
-                if($mod_id){
-                    $mod = R::findOne('modification', 'id = ? AND product_id = ?', [$mod_id, $id]);
-                }
+        if($id){
+          $product =  R::findOne('product', 'id = ?', [$id]);
 
-            }
-
-            $cart = new Cart();
-            $cart->changeCart($product, $operation, $mod);
-
-            $this->isAjax() ? $this->showAction() : redirect();
-
+          if(!$product){
+            return false;
+          }
         }
+
+        $cart = new Cart();
+        $cart->changeCart($product, $operation, $prodData);
+
+        $this->isAjax() ? $this->showAction() : redirect();
+
+      }
 
         public function showAction()
         {
@@ -207,7 +204,7 @@
                 // send email to user
                 $user_email = isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : $_POST['userEmail'];
                 $order_id = Order::saveOrder($orderData);
-                Order::mailOrder($order_id, $user_email);
+              //  Order::mailOrder($order_id, $user_email);
 
                 // check if order is success
                 if($order_id)

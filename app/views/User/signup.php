@@ -21,7 +21,7 @@
 
                     <div class="row">
 
-                        <div class="col-xs-6">
+                        <div class="col-sm-6 col-xs-12">
 
                             <h2>Личные данные</h2>
 
@@ -60,7 +60,7 @@
 
                         </div>
 
-                        <div class="col-xs-6">
+                        <div class="col-sm-6 col-xs-12">
                             <h2>Данные авторизации</h2>
 
                             <div class="form-group has-feedback">

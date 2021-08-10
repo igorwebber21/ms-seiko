@@ -3,9 +3,8 @@
     <div class="block">
         <div class="container">
             <ul class="breadcrumbs">
-               <!-- <li><a href="index.html"><i class="icon icon-home"></i></a></li>
-                <li>/<span>WOMEN’S</span></li>-->
-                <?=$breadcrumbs;?>
+                 <li><a href="/"><i class="icon icon-home"></i></a></li>
+                 <li>/<span><?=$pageTitle?></span></li>
             </ul>
         </div>
     </div>
@@ -27,7 +26,7 @@
                 <!-- Page Title -->
                 <div class="page-title">
                     <div class="title center">
-                        <h1><?=$category->title?></h1>
+                        <h1><?=$pageTitle?></h1>
                         <?php //debug($products);?>
                     </div>
                 </div>
@@ -79,19 +78,19 @@
 
                         <!-- Pagination -->
                         <div class="flex pagination-block">
-                            <?php  require APP . "/views/Category/product_pagination.php"; ?>
+                            <?php  require APP . "/views/Features/product_pagination.php"; ?>
                         </div>
                         <!-- Pagination -->
 
                         <!-- Products Grid -->
                         <div class="three-in-row product-variant-5 <?=$productsMode?>">
-                            <?php  require APP . "/views/Category/products.php"; ?>
+                            <?php  require APP . "/views/Features/products.php"; ?>
                         </div>
                         <!-- Products Grid -->
 
                         <!-- Pagination -->
                         <div class="flex pagination-block">
-                            <?php  require APP . "/views/Category/product_pagination.php"; ?>
+                            <?php  require APP . "/views/Features/product_pagination.php"; ?>
                         </div>
                         <!-- Pagination -->
 
@@ -111,7 +110,7 @@
 
                 <!-- Categories Info -->
                 <div class="info-block">
-                   <?=$category->text?>
+
                 </div>
                 <!-- Categories Info -->
 

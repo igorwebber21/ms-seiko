@@ -33,8 +33,8 @@
                 <div class="block-content">
                     <div class="price-slider-wrapper">
                         <div class="price-values">
-                            <div class="pull-left"><?=$curr['symbol_left'];?><span id="priceMin"><?=$minPrice?></span><?=$curr['symbol_right'];?></div>
-                            <div class="pull-right"><?=$curr['symbol_left'];?><span id="priceMax"><?=$maxPrice?></span><?=$curr['symbol_right'];?></div>
+                            <div class="pull-left"><?=$curr['symbol_left'];?><span id="priceMin"><?=(int)($curr['value']*$minPrice)?></span><?=$curr['symbol_right'];?></div>
+                            <div class="pull-right"><?=$curr['symbol_left'];?><span id="priceMax"><?=(int)($curr['value']*$maxPrice)?></span><?=$curr['symbol_right'];?></div>
                         </div>
                         <div id="priceSlider" class="price-slider"></div>
                     </div>

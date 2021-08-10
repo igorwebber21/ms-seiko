@@ -1,9 +1,9 @@
 <?php if(!empty($products)): ?>
 
     <!-- Product Item -->
-    <?php  $curr = \ishop\App::$app->getProperty('currency'); ?>
-    <?php foreach ($products as $product):
-           $productImages = explode(',', $product['base_img']);
+  <?php  $curr = \ishop\App::$app->getProperty('currency'); ?>
+  <?php foreach ($products as $product):
+    $productImages = explode(',', $product['base_img']);
     ?>
         <div class="product-item large category1">
             <div class="product-item-inside">
@@ -24,19 +24,19 @@
                         <!-- product inside carousel -->
                         <div class="carousel-inside slide" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                <?php if($productImages[0]): ?>
-                                    <?php for ($im = 0; $im< count($productImages); $im++): ?>
-                                    <div class="item<?php if($im == 0) echo ' active';?>">
-                                        <a href="product/<?=$product['alias']?>"><img class="product-image-photo" src="<?=PRODUCTIMG.$productImages[$im]?>" alt=""></a>
-                                    </div>
-                                    <?php endfor; ?>
-                                <?php else:?>
-                                    <div class="item active">
-                                        <a href="product/<?=$product['alias']?>">
-                                            <img class="product-image-photo" src="<?=PRODUCTIMG?>no_image.jpg" alt="">
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
+                              <?php if($productImages[0]): ?>
+                                <?php for ($im = 0; $im< count($productImages); $im++): ?>
+                                      <div class="item<?php if($im == 0) echo ' active';?>">
+                                          <a href="product/<?=$product['alias']?>"><img class="product-image-photo" src="<?=PRODUCTIMG.$productImages[$im]?>" alt=""></a>
+                                      </div>
+                                <?php endfor; ?>
+                              <?php else:?>
+                                  <div class="item active">
+                                      <a href="product/<?=$product['alias']?>">
+                                          <img class="product-image-photo" src="<?=PRODUCTIMG?>no_image.jpg" alt="">
+                                      </a>
+                                  </div>
+                              <?php endif; ?>
                             </div>
                             <a class="carousel-control next"></a>
                             <a class="carousel-control prev"></a>
@@ -45,21 +45,21 @@
 
                         <!-- /product main photo  -->
                         <!-- Product Actions -->
-                        <?php if(isset($_SESSION['user'])):
+                      <?php if(isset($_SESSION['user'])):
 
-                          $favouritesClass = isset($_SESSION['user']['favourites'][$product['id']]) ? 'wishlist active' : 'no_wishlist';
+                        $favouritesClass = isset($_SESSION['user']['favourites'][$product['id']]) ? 'wishlist active' : 'no_wishlist';
 
-                          ?>
-                            <a href="#" title="Добавить в избранное" class="<?=$favouritesClass?> add-to-wishlist" data-id="<?=$product['id']?>">
-                                <i class="icon icon-heart"></i>
-                                <span>Add to Wishlist</span>
-                            </a>
-                        <?php else: ?>
-                            <a href="#modalUserAuth" data-toggle="modal" title="Добавить в избранное" class="no_wishlist">
-                                <i class="icon icon-heart"></i>
-                                <span>Add to Wishlist</span>
-                            </a>
-                        <?php endif;?>
+                        ?>
+                          <a href="#" title="Добавить в избранное" class="<?=$favouritesClass?> add-to-wishlist" data-id="<?=$product['id']?>">
+                              <i class="icon icon-heart"></i>
+                              <span>Add to Wishlist</span>
+                          </a>
+                      <?php else: ?>
+                          <a href="#modalUserAuth" data-toggle="modal" title="Добавить в избранное" class="no_wishlist">
+                              <i class="icon icon-heart"></i>
+                              <span>Add to Wishlist</span>
+                          </a>
+                      <?php endif;?>
 
                         <!-- /Product Actions -->
                     </div>
@@ -87,8 +87,8 @@
                 </div>
             </div>
         </div>
-    <?php
-    endforeach; ?>
+  <?php
+  endforeach; ?>
     <!-- /Product Item -->
 
 <?php else: ?>

@@ -28,7 +28,7 @@
             foreach ($articles as $article): ?>
       <div class="blog-post">
         <div class="blog-photo">
-          <a href="/blog/<?=$article['alias']?>"><img src="<?=BLOGPREVIEWIMG.$article['img_preview']?>" alt="Blog Single"></a>
+          <a href="/blog/<?=$article['alias']?>"><img src="<?=BLOGPREVIEWIMG.$article['img_preview']?>" alt="<?=$article['name']?>"></a>
         </div>
         <div class="blog-content">
           <h2 class="blog-title"><a href="/blog/<?=$article['alias']?>"><?=$article['name']?></a></h2>

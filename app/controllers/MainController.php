@@ -23,21 +23,50 @@
 
             $canonical = PATH;
 
-            //debug($hits);
-            $this->set(compact('brands', 'hits', 'curr', 'canonical'));
+            $featuresProducts = R::getAll("SELECT product.id, product.title, product.alias, product.price, 
+                                        product.old_price, product.img, product.hit,  
+                                        GROUP_CONCAT(product_base_img.img SEPARATOR ',') AS base_img
+                                        FROM product 
+                                        LEFT JOIN product_base_img   ON product_base_img.product_id = product.id
+                                        WHERE product.old_price != 0 OR product.hit = 'yes' AND product.status = 'visible'
+                                        GROUP BY product.id ORDER BY product.id DESC LIMIT 16");
 
-           // $this->setMeta(App::$app->getProperty("shop_name"), "Описание", "Ключевики");
+            if($featuresProducts){
+              for ($z=0; $z<count($featuresProducts); $z++){
+                $getProductSizes = R::getAll("SELECT  GROUP_CONCAT(attribute_value.value) AS value
+                                                                    FROM attribute_value
+                                                                    LEFT JOIN attribute_product ON attribute_value.id = attribute_product.attr_id
+                                                                    WHERE attribute_product.product_id = {$featuresProducts[$z]['id']} AND attribute_value.attr_group_id = 6");
+                $featuresProducts[$z]['sizes'] = $getProductSizes[0]['value'];
+              }
+            }
 
-          /*  $names = array('Mike', 'john');
-            $name = 'Andrey';
-            $age = 33;
+            $articles = R::getAll("SELECT  id, name, alias, img_preview, title
+                                        FROM articles
+                                        WHERE status = 'visible' ORDER BY rand() LIMIT 4");
 
-            $cache = Cache::instance();
-           // $cache->set('test', $names);
-            $data = $cache->get('test');
-           // debug($data);
-*/
-            //$this->set(compact('name','age', 'names'));
+            $saleRandomProducts = R::getAll("SELECT product.id, product.title, product.alias, product.price, 
+                                        product.old_price, product.img, product.hit,  
+                                        GROUP_CONCAT(product_base_img.img SEPARATOR ',') AS base_img
+                                        FROM product 
+                                        LEFT JOIN product_base_img   ON product_base_img.product_id = product.id
+                                        WHERE product.old_price != 0 AND product.status = 'visible'
+                                        GROUP BY product.id ORDER BY rand() LIMIT 8");
+
+            if($saleRandomProducts){
+              for ($z=0; $z<count($saleRandomProducts); $z++){
+                $getProductSizes = R::getAll("SELECT  GROUP_CONCAT(attribute_value.value) AS value
+                                                                      FROM attribute_value
+                                                                      LEFT JOIN attribute_product ON attribute_value.id = attribute_product.attr_id
+                                                                      WHERE attribute_product.product_id = {$saleRandomProducts[$z]['id']} AND attribute_value.attr_group_id = 6");
+                $saleRandomProducts[$z]['sizes'] = $getProductSizes[0]['value'];
+              }
+            }
+
+            $sizes = R::findAll("attribute_value", 'attr_group_id = ? ', [6]);
+
+            $this->set(compact('brands', 'hits', 'curr', 'canonical', 'featuresProducts', 'sizes', 'articles', 'saleRandomProducts'));
+
         }
 
     }

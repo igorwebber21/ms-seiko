@@ -27,7 +27,6 @@
         {
             $this->tpl = __DIR__ . '/menu_tpl/menu.php';
             $this->getOptions($options);
-            //debug($this->table);
             $this->run();
         }
 
@@ -43,14 +42,15 @@
         protected function run(){
             $cache = Cache::instance();
             $this->menuHtml = $cache->get($this->cacheKey);
+
             // if np cache
             if(!$this->menuHtml){
                 $this->data = App::$app->getProperty('cats');
                 if(!$this->data){
                     $this->data = R::getAssoc("SELECT * FROM {$this->table}");
                 }
-
                 $this->tree = $this->getTree();
+
                 $this->menuHtml = $this->getMenuHtml($this->tree);
                 // debug($this->tree);
                 if($this->cache){
@@ -83,11 +83,26 @@
         protected function getTree(){
             $tree = [];
             $data = $this->data;
+
             foreach ($data as $id=>&$node) {
+
                 if (!$node['parent_id']){
                     $tree[$id] = &$node;
+                    $node['parent_title'] = '';
                 }else{
+                    // get parent title
+                    $parent_title = '';
+                    if(isset($data[$data[$node['parent_id']]['parent_id']]['title'])){
+                      $parent_title .= $data[$data[$node['parent_id']]['parent_id']]['title'].'&nbsp; => ';
+                    }
+                    if(isset($data[$node['parent_id']]['title'])){
+                      $parent_title .= $data[$node['parent_id']]['title'].'&nbsp; => ';
+                    }
+                    $node['parent_title'] = $parent_title;
+
+
                     $data[$node['parent_id']]['childs'][$id] = &$node;
+
                 }
             }
             return $tree;
@@ -96,9 +111,9 @@
         protected function getMenuHtml($tree, $tab = ''){
             $str = '';
 
+
             if($this->default)
             {
-
                 foreach($tree as $id => $category){
                     $str .= $this->catDefaultTemplate($category, $tab, $id);
                 }

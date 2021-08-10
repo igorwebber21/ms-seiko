@@ -892,12 +892,61 @@ $("#changePasswordForm").submit(function () {
         }
     }
 
+   /* $('.size-list .absent-option a').click(function(){
+        return false;
+    });
+*/
     // добавить в корзину (делегируем событие для нового контента на странице, которое загружается динамически AJAX-ом)
     $('body').on('click', '.add-to-cart', function(e){
+
         e.preventDefault();
-        var id = $(this).data('id'),
+
+        if($(this).hasClass('choose-size')){
+            $("#addToCart").modal('hide');
+        }
+
+        if($(this).hasClass('modal-activate')){
+            let id = Number($(this).attr('data-id'));
+            let sizes = ($(this).attr('data-sizes'));
+            let imageSrc = $(this).parents('.product-item-info').find('.product-image-photo').attr("src");
+            let productName = $(this).parents('.product-item-info').find('.product-item-name a').text();
+
+            let sizesArr = sizes.split(',');
+
+            $("#addToCart button.choose-size").attr('data-id', id);
+            $("#addToCart .product-image-photo").attr("src", imageSrc);
+            $("#addToCart .modal-product-name").text(productName);
+
+            let firstItem = true;
+
+            $("#addToCart .size-list li").each(function(){
+                let curItem = $(this);
+                let currSize = $(this).find('a').attr("data-value");
+
+                if($.inArray(currSize, sizesArr ) === -1){
+                    curItem.addClass('absent-option');
+                    curItem.removeClass('active');
+                }
+                else{
+                    curItem.removeClass('absent-option');
+                    curItem.removeClass('active');
+
+                    if(firstItem){
+                        curItem.addClass('active');
+                        firstItem = false;
+                    }
+
+                }
+            });
+            
+            $("#addToCart").modal('show');
+
+            return false;
+        }
+
+        var id = Number($(this).attr('data-id')),
             qty = $('input.qty-input').val() ? $('input.qty-input').val() : 1,
-            mod = $('.available select').val();
+            mod = $(this).parents('.product-info-block').find('.size-list li.active a').attr('data-value');
 
         $.ajax({
             url: '/cart/add',
@@ -905,6 +954,63 @@ $("#changePasswordForm").submit(function () {
             type: 'GET',
             success: function(res){
                 showCartViews(res);
+            },
+            error: function(){
+                alert('Ошибка! Попробуйте позже');
+            }
+        });
+    });
+
+
+    $('body').on('click', '.add-to-wishlist', function(e){
+
+        e.preventDefault();
+
+        var wishlistButton = $(this);
+        var id = Number(wishlistButton.attr('data-id'));
+        var removeBtn = Number(wishlistButton.attr('data-remove'));
+        var productPage = Number(wishlistButton.attr('data-product'));
+
+        console.log('removeBtn', removeBtn);
+        console.log('id', id);
+
+        $.ajax({
+            url: '/user/favourites',
+            data: {id: id},
+            type: 'POST',
+            success: function(res){
+                let result = JSON.parse(res);
+
+                if(result.status == 1){
+
+                    if(removeBtn == 1){
+                        wishlistButton.parents('.table-row').remove();
+                    }
+                    else if(productPage == 1){
+
+                        let wishlistTextBtn = wishlistButton.find('.wishlist-text');
+
+                        if(result.action === 'add'){
+                            wishlistButton.addClass('active');
+                            wishlistTextBtn.text('В избранном');
+                        }
+                        else{
+                            wishlistButton.removeClass('active');
+                            wishlistTextBtn.text('В избранное');
+                        }
+                    }
+                    else{
+                        if(result.action === 'add'){
+                            wishlistButton.addClass('active wishlist').removeClass('no_wishlist');
+                        }
+                        else{
+                            wishlistButton.removeClass('active wishlist').addClass('no_wishlist');
+                        }
+                    }
+
+                    $(".badge.favorites").text(result.count);
+                }
+
             },
             error: function(){
                 alert('Ошибка! Попробуйте позже');
@@ -972,6 +1078,33 @@ $("#changePasswordForm").submit(function () {
 
         return false;
     });
+
+    // очистить избранное
+    $('body').on('click', '.favourites-clear-confirm', function() {
+
+        $.ajax({
+            url: '/user/clearFavourites',
+            type: 'GET',
+            success: function(res){
+                $(".badge.favorites").text('0');
+                $("#userFavourites .cart-table").remove();
+
+                $("#userFavourites").append("<div class=\"no-products-block\">\n" +
+                "                                  <h1>В избранном ещё нет ни одного товара</h1>\n" +
+                "                              </div>");
+
+                $("#clearFavourites .modal-body").html('<h3 class="text-center" style="margin-top: 20px;">Все товары удалены из избранного</h3>');
+            },
+            error: function(){
+                alert('Ошибка! Попробуйте позже');
+            }
+        });
+
+        return false;
+    });
+
+
+
 
     // вызов модального окна по очистке корзины
     $('#header-cart-block, #cart-content').on('click', '.cart-clear', function() {

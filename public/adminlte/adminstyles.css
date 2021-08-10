@@ -1,10 +1,158 @@
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+    width: 8px; /* ширина для вертикального скролла */
+    height: 8px; /* высота для горизонтального скролла */
+    background-color: #eee;
+}
 
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #3C8DBC; /*/#1b1929;*/
+    /*  border-radius: 9em;
+      box-shadow: inset 1px 1px 10px #f3faf7;*/
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #253861;
+}
 
 table.table-centered td,
 table.table-centered th{
     vertical-align: middle!important;
     text-align: center;
 }
+
+/* ====== search ===========*/
+
+.search__button{
+    z-index: 99999;
+}
+
+#searchCatalog{
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+#searchCatalog .catalog-grid__item.searchItem{
+    width: 24%;
+}
+
+.search-mobile form{
+    display: flex;
+    width: 100%;
+
+}
+
+.tt-menu{
+    border: 1px solid #ccc;
+    background: #ffF;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tt-dataset{
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+
+.tt-suggestion{
+    padding: 5px;
+}
+
+.list-group-item.no-results{
+    padding: 5px 10px;
+}
+
+.tt-suggestion {
+    padding: 2px 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.tt-suggestion span.left{
+    max-width: 44px;
+}
+
+.search-results-price{
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.search-results-title{
+    text-align: center;
+    margin-bottom: 0!important;
+    padding: 0 25px;
+    color: #000;
+}
+
+.no-results-search{
+    padding-bottom: 100px;
+}
+
+.no-results-search .search__input{
+    width: 400px;
+    height: 36px;
+}
+
+.no-results-search form{
+    max-width: 400px;
+    margin: 50px auto;
+    position: relative;
+}
+
+
+.no-results-search .search__button .icon--search {
+    right: 10px;
+    top: 10px;
+    font-size: 16px;
+}
+
+.no-results-search .search-try-again{
+    margin-top: 75px;
+}
+
+.no-results-search .search-try-again h2{
+    margin-top: 25px;
+}
+
+
+.search-mobile .twitter-typeahead{
+    width: 100%;
+}
+
+.search-mobile .search__input{
+    width: 100%;
+}
+
+.search-mobile form{
+    max-width: 100%;
+}
+
+.admin-search-block{
+    overflow: unset;
+    margin: 10px 0!important;
+}
+
+.admin-search-block .twitter-typeahead{
+    width: 100%;
+}
+
+.admin-search-block .input-group{
+    width: 100%;
+}
+
+.admin-search-block input{
+    float: none!important;
+}
+
+/* ====== search ===========*/
 
 /* =============    orders    ============= */
 .order-title-text{

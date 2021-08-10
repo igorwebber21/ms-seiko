@@ -11,6 +11,12 @@
     Router::add('^admin$', ['controller' => 'Main', 'action' => 'index', 'prefix' => 'admin']);
     Router::add('^admin/?(?P<controller>[a-z-]+)/?(?P<action>[a-z-]+)?$', ['prefix' => 'admin']);
 
+    Router::add('^blog/?$', ['controller' => 'Blog', 'action' => 'index']);
+    Router::add('^search/?$', ['controller' => 'Search', 'action' => 'index']);
+
+    Router::add('^sale/?$', ['controller' => 'Features', 'action' => 'view']);
+    Router::add('^new/?$', ['controller' => 'Features', 'action' => 'view']);
+
     #for pages (about, delivery, contacts)
     Router::add('^(?P<alias>[a-z-]+)/?$', ['controller' => 'Page', 'action' => 'view']);
 

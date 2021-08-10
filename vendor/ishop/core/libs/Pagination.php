@@ -85,10 +85,43 @@
         public function getParams()
         {
             $url = $_SERVER['REQUEST_URI'];
+            // echo $url;
+
+            // 1) вырезать второй параметр filter из /category/bryuki?filter=1,2,3,&filter=1,2,3,5,
             preg_match_all("#filter=[\d,&]#", $url, $matches);
             if(count($matches[0]) > 1){
                 $url = preg_replace("#filter=[\d,&]+#", "", $url, 1);
             }
+            $url = preg_replace("#filter=&+#", "", $url, 1);
+
+
+            // 2) вырезать второй параметр sort из /category/bryuki?sort=date_desc&sort=price_asc
+            preg_match_all("#sort=[\w_]+#", $url, $matches2);
+            if(count($matches2[0]) > 1){
+                $url = preg_replace("#sort=[\w_]+&#", "", $url, 1);
+            }
+
+            // 3) Если есть GET параметр productsPerPage - удаляем его со значением ?productsPerPage=12&page=4
+            $url = preg_replace("#productsPerPage=[\d&]+#", "", $url, 1);
+
+            // 4) Если есть GET параметр productsMode - удаляем его со значением ?productsMode=products-listview&page=4
+            $url = preg_replace("#productsMode=[\w-&]+#", "", $url, 1);
+
+            // 5) вырезать второй параметр minPrice из /category/bryuki?sort=date_desc&minPrice=800
+            preg_match_all("#minPrice=[\d&]#", $url, $matches2);
+            if(count($matches2[0]) > 1){
+              $url = preg_replace("#minPrice=[\d&]+&#", "", $url, 1);
+            }
+
+            // 6) вырезать второй параметр maxPrice из /category/bryuki?sort=date_desc&maxPrice=1400
+            preg_match_all("#maxPrice=[\d&]#", $url, $matches2);
+            if(count($matches2[0]) > 1){
+              $url = preg_replace("#maxPrice=[\d&]+&#", "", $url, 1);
+            }
+
+            // если есть лишний амперсант в конце строки, то удаляем его
+            $url = trim($url,'&');
+
             $url = explode('?', $url);
             $uri = $url[0] . '?';
             if(isset($url[1]) && $url[1] != ''){

@@ -47,7 +47,23 @@
                             </tr>
                             <tr>
                                 <td>Имя заказчика</td>
-                                <td><?=$order['name'];?></td>
+                                <td><?=$order['fname'];?> <?=$order['lname'];?></td>
+                            </tr>
+                            <tr>
+                                <td>Способ доставки</td>
+                                <td>
+                                    <?php if($order['deliveryMethod']): ?>
+                                      <?=$order['deliveryMethod'];?> (+ <?=$order['deliveryPrice'];?> <?=$order['currency'];?>) <br/>
+                                      <?=$order['deliveryBranch'];?> <br/>
+                                      <?=$order['deliveryCity'];?>
+                                    <?php endif;?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Способ оплаты</td>
+                                <td>
+                                  <?=$order['paymentMethod'];?>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Статус</td>

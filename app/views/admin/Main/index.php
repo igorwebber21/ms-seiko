@@ -53,7 +53,7 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="<?=ADMIN?>/users" class="small-box-footer"> Все  пользователи <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="<?=ADMIN?>/user" class="small-box-footer"> Все  пользователи <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->

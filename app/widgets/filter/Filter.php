@@ -18,13 +18,14 @@ class Filter
     public function __construct($filterData, $filter = null, $tpl = '')
     {
         self::$filterData = $filterData;
+
         $this->filter = $filter;
         $this->tpl = $tpl ? $tpl : __DIR__. '/filter_tpl/filter.php';
     }
 
     public function run()
     {
-        $cache = Cache::instance();
+        /*$cache = Cache::instance();
 
         $this->groups = $cache->get('filter_group');
         if(!$this->groups)
@@ -38,7 +39,10 @@ class Filter
         {
             $this->attrs = self::getAttrs();
             $cache->set('filter_attrs', $this->attrs, 3600);
-        }
+        }*/
+
+        $this->groups = $this->getGroups();
+        $this->attrs = self::getAttrs();
 
         $filters = $this->getHtml();
         return $filters;
@@ -50,8 +54,11 @@ class Filter
         $selectedFilter = '';
         $filter = Filter::getFilter();
 
-        $minPrice = isset(self::$filterData['minPrice']) ? self::$filterData['minPrice'] : 0;
-        $maxPrice = isset(self::$filterData['maxPrice']) ? self::$filterData['maxPrice'] : 0;
+        $curr = \ishop\App::$app->getProperty('currency');
+
+        $minPrice = isset(self::$filterData['minPrice']) ? round(self::$filterData['minPrice'] / $curr['value']) : 0;
+        $maxPrice = isset(self::$filterData['maxPrice']) ? round(self::$filterData['maxPrice'] / $curr['value']): 0;
+
         $curr = \ishop\App::$app->getProperty('currency');
 
         if($filter){
@@ -70,6 +77,22 @@ class Filter
 
     protected static function getAttrs()
     {
+        if(isset(self::$filterData['features'])){
+
+          switch(self::$filterData['features']){
+            case 'sale':
+              $where = "`product`.old_price != 0";
+              break;
+            case 'new';
+              $where = "`product`.hit = 'yes'";
+              break;
+          }
+
+        }
+        else{
+          $where = "`product`.`category_id` IN(".self::$filterData['categoryIds'].")";
+        }
+
         $data = R::getAssoc("SELECT `attribute_product`.`attr_id`, COUNT(`product`.`id`) AS 'productsCount', `attribute_value`.`value`, 
                                         `attribute_value`.`attr_group_id`
                                     FROM `product`
@@ -77,7 +100,7 @@ class Filter
                                     ON `attribute_product`.`product_id` = `product`.`id`
                                     LEFT JOIN `attribute_value`
                                     ON `attribute_product`.`attr_id` = `attribute_value`.`id`
-                                    WHERE `product`.`category_id` IN('".self::$filterData['categoryIds']."')
+                                    WHERE ".$where."
                                     GROUP BY `attribute_product`.`attr_id`");
 
         $attrs = [];
@@ -91,6 +114,7 @@ class Filter
                 ];
             }
         }
+
         return $attrs;
     }
 
@@ -116,12 +140,14 @@ class Filter
     public static function countGroups($filter)
     {
         $filters = explode(',', $filter);
-        $cache = Cache::instance();
+       /* $cache = Cache::instance();
         $filter_attrs = $cache->get('filter_attrs');
 
         if(!$filter_attrs){
             $filter_attrs = self::getAttrs();
-        }
+        }*/
+
+        $filter_attrs = self::getAttrs();
 
         $data = [];
         foreach ($filter_attrs as $group_id => $item){

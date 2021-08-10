@@ -49,11 +49,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Доставка</td>
-                                                <td> <?=$_SESSION['cart.currency']['symbol_left']?><span class="cartDeliveryPrice">50</span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
+                                                <td> <?=$_SESSION['cart.currency']['symbol_left']?><span class="cartDeliveryPrice"><?=$curr['value']*50?></span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
                                             </tr>
                                             <tr class="total">
                                                 <td>К оплате</td>
-                                                <td><?=$_SESSION['cart.currency']['symbol_left']?> <span class="cartTotalSum"><?=round($_SESSION['cart.sum']) + $delivery_methods[0]['price']?></span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
+                                                <td><?=$_SESSION['cart.currency']['symbol_left']?> <span class="cartTotalSum"><?=round($_SESSION['cart.sum']) + $delivery_methods[0]['price']*$curr['value']?></span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
                                             </tr>
                                         </table>
                                         <div class="cart-action">
@@ -102,7 +102,7 @@
                                                     <?php if($delivery_methods):
                                                         foreach ($delivery_methods as $delivery_method): ?>
                                                             <option value="<?=$delivery_method['id']?>" data-type="<?=$delivery_method['type']?>"
-                                                                    data-price="<?=$delivery_method['price']?>">
+                                                                    data-price="<?=$delivery_method['price']*$curr['value']?>">
                                                                 <?=$delivery_method['title']?> (<?=$delivery_method['price']?> <?=$delivery_method['currency']?>, <?=$delivery_method['timing']?>)
                                                             </option>
                                                         <?php endforeach;
@@ -221,11 +221,11 @@
                                         </tr>
                                         <tr>
                                             <td>Доставка</td>
-                                            <td> <?=$_SESSION['cart.currency']['symbol_left']?><span class="cartDeliveryPrice">50</span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
+                                            <td> <?=$_SESSION['cart.currency']['symbol_left']?><span class="cartDeliveryPrice"><?=$curr['value']*50?></span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
                                         </tr>
                                         <tr class="total">
                                             <td>К оплате</td>
-                                            <td><?=$_SESSION['cart.currency']['symbol_left']?> <span class="cartTotalSum"><?=round($_SESSION['cart.sum']) + $delivery_methods[0]['price']?></span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
+                                            <td><?=$_SESSION['cart.currency']['symbol_left']?> <span class="cartTotalSum"><?=round($_SESSION['cart.sum']) + $delivery_methods[0]['price']*$curr['value']?></span> <?=$_SESSION['cart.currency']['symbol_right'] ?></td>
                                         </tr>
                                     </table>
                                     <div class="cart-action">

@@ -43,7 +43,10 @@
                                         </a>
                                     </td>
                                     <td><?=$product['cat'];?></td>
-                                    <td><a href="<?=ADMIN;?>/product/edit?id=<?=$product['id'];?>"><?=$product['title'];?></a></td>
+                                    <td><a href="<?=ADMIN;?>/product/edit?id=<?=$product['id'];?>"><?=$product['title'];?></a>
+
+                                        <div style="margin-top: 10px;">Артикул: <?=$product['vendor_code'];?></div>
+                                    </td>
                                     <td><?=$product['price'];?> грн.</td>
                                     <td><?=$product['status'] == 'visible' ? 'Активный' : 'Скрытый';?></td>
                                     <td><?=date_point_format($product['date_add']);?></td>

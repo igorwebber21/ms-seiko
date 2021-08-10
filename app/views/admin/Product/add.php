@@ -31,7 +31,7 @@
                                 'container' => 'select',
                                 'cache' => 0,
                                 'cacheKey' => 'admin_select',
-                                'class' => 'form-control',
+                                'class' => 'form-control select2',
                                 'attrs' => [
                                     'name' => 'category_id',
                                     'id' => 'category_id',
@@ -137,7 +137,7 @@
                                     <input type="checkbox" name="hit" checked>
                                     <span class="slider round"></span>
                                 </label>
-                                <span class="checkbox-text">Хит</span>
+                                <span class="checkbox-text">Новинка</span>
                             </label>
 
                         </div>

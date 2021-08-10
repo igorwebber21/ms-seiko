@@ -5,13 +5,19 @@ function debug($arr, $exit = false){
     if($exit) exit();
 }
 
-function redirect($http = false){
+function redirect($http = false, $withoutGet = false){
 
     if($http){
         $redirect = $http;
     }
     else{
         $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH;
+
+        // delete Get parameters form string url
+        if($withoutGet){
+          $urlQuery = "?".parse_url($redirect, PHP_URL_QUERY);
+          $redirect = str_replace($urlQuery,'', $redirect);
+        }
     }
 
     header("Location: $redirect");
@@ -40,7 +46,8 @@ function h($str)
 
 function date_point_format($date_str)
 {
-    return $date_str ? date('d.m.Y H:i', strtotime($date_str)) : '';
+    return ($date_str && $date_str != '0000-00-00 00:00:00')
+            ? date('d.m.Y H:i', strtotime($date_str)) : '';
 }
 
 

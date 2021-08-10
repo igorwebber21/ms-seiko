@@ -247,7 +247,11 @@ $(".select2.related-products").select2({
 // =================  ckEditor init  ================= //
 // Replace the <textarea id="editor1"> with a CKEditor
 // instance, using default configuration.
-//CKEDITOR.replace('editorProduct');
+
+if ($("#editorProduct").length){
+    CKEDITOR.replace('editorProduct');
+}
+
 $('.categoryForm #text, .articleForm #text').ckeditor();
 
 
@@ -265,4 +269,55 @@ $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck(
 $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
     checkboxClass: 'icheckbox_flat-green',
     radioClass   : 'iradio_flat-green'
+});
+
+
+
+/* Search */
+var products = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+        wildcard: '%QUERY',
+        url: path + '/search/typeahead?query=%QUERY'
+    }
+});
+
+products.initialize();
+
+$("#typeahead").typeahead({
+      hint: false,
+      highlight: true,
+      minLength: 1
+  },{
+      name: 'products',
+      display: 'title',
+      limit: 10,
+      source: products.ttAdapter(),
+      templates: {
+
+          empty: [
+              '<div class="list-group search-results-dropdown"><div class="list-group-item no-results"> Ничего не найдено...</div></div>'
+          ],
+          header: [
+              '<div class="list-group search-results-dropdown">'
+          ],
+          suggestion: function (data) {
+
+              var searchProductImgs = data.base_img.split(',');
+
+              return '<a href="/admin/product/edit?id=' + data.id + '" class="list-group-item">' +
+                '<span class="left"><img width="40" src="' + base_product_img + searchProductImgs[0] + '" alt="' + data.title + '" />'
+                + '</span>'
+                + '<span class="search-results-title">' + data.title +  '</span><span class="search-results-price">' + data.price + ' грн.</span></a>'
+          }
+
+      }
+  }
+
+);
+
+$('#typeahead').bind('typeahead:select', function(ev, suggestion) {
+    // console.log(suggestion);
+    window.location = path + '/search/?s=' + encodeURIComponent(suggestion.title);
 });

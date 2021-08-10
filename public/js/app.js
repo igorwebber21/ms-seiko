@@ -344,7 +344,7 @@ $(function () {
 			$optionlist = $('ul', $option),
 			$optionbtn = $('a', $optionlist),
 			$optionselect = $('select', $option);
-		$optionlist.find("a[data-value='" + $optionselect.val() + "']").parent().addClass('active');
+		  $optionlist.find("a[data-value='" + $optionselect.val() + "']").parent().addClass('active');
 		$optionbtn.on('click', function (e) {
 			$this = $(this);
 			if ($this.data('image')) {
@@ -363,7 +363,7 @@ $(function () {
 				}
 			}
 
-			if (!$this.parent('li').is('.active')) {
+			if (!$this.parent('li').is('.active') && !$this.parent('li').hasClass('absent-option')) {
 				$optionselect.val($this.attr('data-value'));
 				$this.closest('ul').find('li').removeClass('active');
 				$this.parent('li').addClass('active');
@@ -2906,7 +2906,7 @@ $(function () {
 			//prevButton: '.swiper-button-prev',
 			effect: 'fade',
 			loop: true,
-			autoplay: 10000,
+			autoplay: 15000,
 			autoplayDisableOnInteraction: false,
 			simulateTouch: false,
 			onPaginationRendered: function (swiper) {
@@ -3131,7 +3131,7 @@ $(function () {
 	$('.carousel-inside').insideCarousel();
 	$('.productStack').ProductStack();
 	$('.product-item').FlyToCart({
-		link: '.add-to-cart',
+		link: '.add-to-cart-fly',
 		productstack: '.productStack',
 		complete: function () {
 			// add yout action here 

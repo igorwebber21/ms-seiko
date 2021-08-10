@@ -75,6 +75,7 @@
                             <i class="fa fa-envelope-o"></i>
                             <span class="label label-success">4</span>
                         </a>
+
                         <ul class="dropdown-menu">
                             <li class="header">You have 4 messages</li>
                             <li>
@@ -331,12 +332,9 @@
                 </div>
             </div>
             <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
+            <form action="#" method="get" class="sidebar-form admin-search-block" style="">
                 <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
+                    <input type="text" id="typeahead" name="s" class="form-control typeahead" placeholder="Поиск по товарам...">
               </span>
                 </div>
             </form>
@@ -651,6 +649,8 @@
 <script>
     var path = '<?=PATH;?>',
         adminpath = '<?=ADMIN;?>';
+
+    var base_product_img = '<?=UPLOAD_PRODUCT_BASE?>';
 </script>
 
 <!-- jQuery 3 -->
@@ -700,6 +700,8 @@
 <!-- ajaxupload -->
 <script src="/js/ajaxupload.js"></script>
 
+<!-- typeahead -->
+<script src="typeahead.bundle.js"></script>
 
 <script src="adminscripts.js"></script>
 

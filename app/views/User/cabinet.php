@@ -25,7 +25,14 @@
                     <li class="active"><a href="#userInfo" role="tab" data-toggle="tab">Личные данные</a></li>
                     <li><a href="#userChangePassword" role="tab" data-toggle="tab">Смена пароля</a></li>
                     <li><a href="#userOrders" role="tab" data-toggle="tab">Мои заказы</a></li>
-                    <li><a href="#userFavourites" role="tab" data-toggle="tab">Избранное</a></li>
+                    <li>
+                        <a href="#userFavourites" role="tab" data-toggle="tab">
+                            Избранное
+                            <span class="badge favorites">
+                              <?=isset($_SESSION['user']['favourites']) ? count($_SESSION['user']['favourites']): 0; ?>
+                            </span>
+                        </a>
+                    </li>
                     <li><a href="#userBonusCash" role="tab" data-toggle="tab">Бонусный счёт</a></li>
                     <li>
                         <a href="user/logout" class="btn-out">
@@ -45,7 +52,7 @@
                         <form id="userInfoForm" class="white" method="post" action="user/edit" autocomplete="off">
 
                             <div class="row">
-                                <div class="col-xs-5">
+                                <div class="col-md-5 col-sm-12">
 
                                     <h2>Мои личные данные</h2>
 
@@ -84,7 +91,7 @@
 
                                 </div>
 
-                                <div class="col-xs-5  col-xs-offset-1">
+                                <div class="col-md-5 col-md-offset-1 col-sm-12">
 
                                     <h2>Мои контакты</h2>
 
@@ -115,7 +122,7 @@
                             <div class="blockquote hide form-errors"> </div>
                             <div class="blockquote hide form-success"> </div>
                             <div class="row">
-                                <div class="col-xs-5">
+                                <div class="col-md-7 col-sm-12">
 
                                     <h2>Смена пароля</h2>
 
@@ -243,7 +250,57 @@
 
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="userFavourites"> </div>
+                    <div role="tabpanel" class="tab-pane" id="userFavourites">
+
+                        <h2>Избранные товары</h2>
+
+                        <div class="cart-table">
+                          <?php if(!empty($favouriteProducts)):?>
+                              <div class="table-header">
+                                  <div class="photo">
+                                      Фото
+                                  </div>
+                                  <div class="name">
+                                      Наименование
+                                  </div>
+                                  <div class="price">
+                                      Цена
+                                  </div>
+                                  <div class="remove">
+                                  </div>
+                              </div>
+                            <?php foreach($favouriteProducts as $item): ?>
+                                  <div class="table-row">
+                                      <div class="photo">
+                                          <a href="product/<?=$item['alias']?>">
+                                              <img class="favourite-photo" src="<?=PRODUCTIMG?><?=$item['img'];?>" alt="<?=$item['title'] ?>">
+                                          </a>
+                                      </div>
+                                      <div class="name text-center">
+                                          <a href="product/<?=$item['alias']?>"><?=$item['title'] ?></a>
+                                      </div>
+                                      <div class="price">
+                                        <?=$_SESSION['cart.currency']['symbol_left']?> <?=round($item['price'] * $curr['value'])?> <?=$_SESSION['cart.currency']['symbol_right'] ?>
+                                      </div>
+                                      <div class="remove">
+                                          <a href="#" class="icon icon-close-2 action delete add-to-wishlist" data-remove="1" data-id="<?=$item['id']?>"></a>
+                                      </div>
+                                  </div>
+                            <?php endforeach; ?>
+
+                              <div class="table-footer">
+                                  <button class="btn btn-alt pull-right cart-clear" href="#clearFavourites" data-toggle="modal"><i class="icon icon-bin"></i><span>Очистить избранное</span></button>
+                              </div>
+
+                          <?php else: ?>
+                              <div class="no-products-block">
+                                  <h1>В избранном ещё нет ни одного товара</h1>
+                              </div>
+                          <?php endif; ?>
+
+                        </div>
+
+                    </div>
 
                     <div role="tabpanel" class="tab-pane" id="userBonusCash">
                         <h2> На Вашем бонусном счёте <span>0</span> грн.</h2>

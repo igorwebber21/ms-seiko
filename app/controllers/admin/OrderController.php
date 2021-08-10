@@ -18,8 +18,8 @@ class OrderController extends AppController
         $pagination = new Pagination($page, $perpage, $count);
         $start = $pagination->getStart();
 
-        $orders = R::getAll("SELECT `orders`.`id`, `orders`.`user_id`, `orders`.`status`, `orders`.`date`, `orders`.`update_at`, 
-                                  `orders`.`currency`, `user`.`fname`, `user`.`lname`, ROUND(SUM(`order_product`.`price`), 2) AS `sum`,
+        $orders = R::getAll("SELECT `orders`.`id`, `orders`.`user_id`, `orders`.`status`, `orders`.`sum`, `orders`.`date`, `orders`.`update_at`, 
+                                  `orders`.`currency`, `user`.`fname`, `user`.`lname`,
                                   COUNT(`order_product`.id) AS `productsCount`
                                   FROM `orders`
                                   JOIN `user` ON `orders`.`user_id` = `user`.`id`
@@ -33,15 +33,23 @@ class OrderController extends AppController
     public function viewAction()
     {
         $order_id = $this->getRequestID();
-        $order = R::getRow("SELECT `orders`.*,  `user`.`fname`, `user`.`lname`,  ROUND(SUM(`order_product`.`price`), 2) AS `sum`
+        $order = R::getRow("SELECT `orders`.*,  `user`.`fname`, `user`.`lname`, `user_delivery`.`delivery_city` AS deliveryCity, `user_delivery`.`delivery_branch` AS deliveryBranch,
+                                                `delivery_methods`.`title` AS deliveryMethod, `delivery_methods`.`price` AS deliveryPrice,
+                                                 `payment_methods`.`title` AS paymentMethod,
+                                                 IF(`currency`.`symbol_left`, `currency`.`symbol_left`, `currency`.`symbol_right`) AS currency
                                 FROM `orders`
                                 JOIN `user` ON `orders`.`user_id` = `user`.`id`
                                 JOIN `order_product` ON `orders`.`id` = `order_product`.`order_id`
+                                LEFT JOIN `user_delivery` ON `user_delivery`.`order_id` = `orders`.`id`
+                                LEFT JOIN `delivery_methods` ON `delivery_methods`.`id` = `user_delivery`.`delivery_method`
+                                LEFT JOIN `payment_methods` ON `payment_methods`.`id` = `user_delivery`.`payment_method`
+                                 LEFT JOIN `currency` ON `currency`.`code` = `orders`.`currency`
                                 WHERE `orders`.`id` = ?
                                 GROUP BY `orders`.`id` ORDER BY `orders`.`status`, `orders`.`id` LIMIT 1", [$order_id]);
         if(!$order){
             throw new \Exception('Страница не найдена', 404);
         }
+
         $order_products = R::findAll('order_product', "order_id = ?", [$order_id]);
         $this->setMeta("Заказ №{$order_id}");
         $this->set(compact('order', 'order_products'));

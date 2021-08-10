@@ -77,8 +77,30 @@
                     <!-- /Header Cart -->
                     <!-- Header Links -->
                     <div class="header-links">
+
+                        <!-- Header Currency -->
+                        <div class="header-link header-select dropdown-link header-currency">
+                            <?php new \app\widgets\currency\Currency(); ?>
+                        </div>
+                        <!-- /Header Currency -->
                         <!-- Header Language -->
-                        <div class="header-link header-select dropdown-link header-language">
+                        <div class="header-link">
+                              <?php if(isset($_SESSION['user'])): ?>
+                                <a href="/user/cabinet" title="Добавить в избранное" class="no_wishlist">
+                                    <i class="icon icon-heart"></i>
+                                  <?php if(isset($_SESSION['user']['favourites'])): ?>
+                                      <span class="badge favorites"><?=count($_SESSION['user']['favourites'])?></span>
+                                  <?php else: ?>
+                                      <span class="badge favorites">0</span>
+                                  <?php endif;?>
+                                </a>
+                            <?php else: ?>
+                                <a href="#modalUserAuth" data-toggle="modal"  title="Добавить в избранное" class="no_wishlist">
+                                    <i class="icon icon-heart"></i>
+                                </a>
+                            <?php endif; ?>
+                            <!--
+                            <div class="header-link header-select dropdown-link header-language">
                             <a href="#">RU</a>
                             <ul class="dropdown-container" id="currency">
                                 <li class="active">
@@ -91,13 +113,10 @@
                                     <a href="#"><img src="images/flags/us.png" alt />EN</a>
                                 </li>
                             </ul>
+                            </div>
+                            -->
                         </div>
                         <!-- /Header Language -->
-                        <!-- Header Currency -->
-                        <div class="header-link header-select dropdown-link header-currency">
-                            <?php new \app\widgets\currency\Currency(); ?>
-                        </div>
-                        <!-- /Header Currency -->
                         <!-- Header Account -->
                         <div class="header-link dropdown-link header-account">
                             <?php if(isset($_SESSION['user']) && $_SESSION['user']): ?>
@@ -134,11 +153,11 @@
                         </div>
                         <div class="mobilemenu-content">
                             <ul class="nav">
-                                <li><a href="/?v=category">Мужчинам</a></li>
-                                <li><a href="category.html">Женчинам</a></li>
-                                <li><a href="category.html">Детям</a></li>
-                                <li><a href="category.html">Sale</a></li>
-                                <li><a href="category.html">Новинки</a></li>
+                                <li><a href="/category/muzhchinam">Мужчинам</a></li>
+                                <li><a href="/category/zhenschinam">Женчинам</a></li>
+                                <li><a href="/category/detyam">Детям</a></li>
+                                <li><a href="/sale">Sale</a></li>
+                                <li><a href="/new">Новинки</a></li>
                                 <li><a href="/blog">Блог</a></li>
                             </ul>
                         </div>
@@ -156,8 +175,8 @@
                                 ]
                             ]);
                             ?>
-                            <li><a href="category.html">Sale<span class="menu-label">-15%</span></a></li>
-                            <li><a href="category.html">Новинки<span class="menu-label-alt">NEW</span></a></li>
+                            <li><a href="/sale">Sale<span class="menu-label">-15%</span></a></li>
+                            <li><a href="/new">Новинки<span class="menu-label-alt">NEW</span></a></li>
                             <li><a href="/blog">Блог</li>
                         </ul>
                     </div>
@@ -210,10 +229,10 @@
                 <div class="container">
                     <!-- newsletter -->
                     <div class="newsletter variant2 row">
-                        <div class="col-sm-3">
+                        <div class="col-md-3 col-sm-12">
                             <a href="/" title="Logo"><img src="images/ms-logo-1-1.png" alt class="img-responsive" /></a>
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-md-9 col-sm-12">
                             <!-- input-group -->
                             <form action="#" id="subscribe-from">
                                 <div class="input-group">
@@ -279,11 +298,11 @@
                                 </div>
                                 <div class="collapsed-content">
                                     <ul class="marker-list">
-                                        <li><a href="about.html">Мужчинам</a></li>
-                                        <li><a href="faq.html">Женщинам</a></li>
-                                        <li><a href="about.html">Детям</a></li>
-                                        <li><a href="blog.html">Новинки</a></li>
-                                        <li><a href="search.html">Sale</a></li>
+                                        <li><a href="/category/muzhchinam">Мужчинам</a></li>
+                                        <li><a href="/category/zhenschinam">Женщинам</a></li>
+                                        <li><a href="/category/detyam">Детям</a></li>
+                                        <li><a href="/new">Новинки</a></li>
+                                        <li><a href="/sale">Sale</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -377,6 +396,92 @@
     </div>
 </div>
 <!-- /Modal -->
+
+
+<!-- Modal -->
+<div class="modal fade zoom" id="clearFavourites">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#10006;</button>
+        </div>
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <h3 class="title">Очистить избранные товары</h3>
+                            <p>Вы уверены, что хотите удалить все избранные товары?</p>
+                            <div class="actions flex">
+                                <div class="secondary">
+                                    <a href="#" class="btn btn-alt" data-dismiss="modal">
+                                        <span> Нет </span>
+                                    </a>
+                                </div>
+                                <div class="primary">
+                                    <a class="btn btn-alt favourites-clear-confirm" href="#">
+                                        <span>Да </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Modal -->
+
+<!--  Modal - add to cart -->
+<div class="modal fade zoom" id="addToCart">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&#10006;</button>
+        </div>
+        <div class="modal-content">
+            <div class="modal-body product-item-inside">
+                <div class="row flex">
+                    <div class="col-lg-6 col-xs-12 photo-block">
+                        <div class="product-item-gallery-main">
+                           <img class="product-image-photo" src="/upload/products/base/d0194b12987d3c88dea8091c4f3d1f3d.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xs-12">
+                        <div class="text-center">
+                            <h3 class="title">Выберите размер</h3>
+                            <p class="modal-product-name">Mango Man - Брюки DUBLIN</p>
+                            <div class="actions product-info-block">
+                                <div class="product-options">
+                                    <div class="product-size swatches">
+                                        <span class="option-label">Размер:</span>
+                                        <?php if($sizes): ?>
+                                        <div class="select-wrapper-sm">
+                                            <select class="form-control input-sm size-variants">
+                                                <?php foreach ($sizes as $size): ?>
+                                                <option value="<?=$size['value']?>"><?=$size['value']?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <ul class="size-list">
+                                              <?php foreach ($sizes as $size): //class="absent-option"?>
+                                                  <li><a href="#" data-value='<?=$size['value']?>'><span class="value"><?=$size['value']?></span></a></li>
+                                              <?php endforeach; ?>
+                                        </ul>
+                                        <?php endif; ?>
+                                        <div>
+                                            <button class="btn add-to-cart add-to-cart-fly choose-size" data-id="47"> <i class="icon icon-cart"></i><span>Выбрать</span> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Modal - add to cart -->
 
 
 <!-- Modal -->

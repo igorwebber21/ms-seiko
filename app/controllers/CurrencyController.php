@@ -23,7 +23,7 @@
 
             }
 
-            redirect();
+            redirect(false, true);
         }
 
     }

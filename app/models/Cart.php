@@ -7,64 +7,65 @@
     class Cart extends AppModel {
 
         public function addToCart($product, $qty = 1, $mod = null){
-            //session_unset();
+          //session_unset();
 
-            // при первом добавлении в корзину, фиксируем валюту как базовую
-            // дальнейшие добавления в корзину будут пересчитываться в этой валюте
-            if(!isset($_SESSION['cart.currency'])){
-                $_SESSION['cart.currency'] = App::$app->getProperty('currency');
-            }
+          // при первом добавлении в корзину, фиксируем валюту как базовую
+          // дальнейшие добавления в корзину будут пересчитываться в этой валюте
+          if(!isset($_SESSION['cart.currency'])){
+            $_SESSION['cart.currency'] = App::$app->getProperty('currency');
+          }
 
-            // если есть модификатор (цвет, размер и т.д.)
-            if($mod){
-                $ID = "{$product->id}-{$mod->id}";
-                $title = "{$product->title} ({$mod->title})";
-                $price = $mod->price;
-            }else{
-                $ID = $product->id;
-                $title = $product->title;
-                $price = $product->price;
-            }
+          // если есть модификатор (цвет, размер и т.д.)
+          if($mod){
+            $ID = "{$product['id']}-{$mod}";
+            $title = "{$product['title']} (Размер {$mod})";
+            $price = $product['price'];
+          }else{
+            $ID = $product['id'];
+            $title = $product['title'];
+            $price = $product['price'];
+          }
 
-            // если товар уже добавлен в козину, добавить количество +qty
-            if(isset($_SESSION['cart'][$ID])){
-                $_SESSION['cart'][$ID]['qty'] += $qty;
-            }
-            else{   // если товара еще нет в корзине
-                $_SESSION['cart'][$ID] = [
-                    'qty' => $qty,
-                    'title' => $title,
-                    'alias' => $product->alias,
-                    'price' => $price * $_SESSION['cart.currency']['value'],
-                    'img' => $product->img,
-                ];
-            }
-            // суммарное количество и сумма
-            $_SESSION['cart.qty'] = isset($_SESSION['cart.qty']) ? $_SESSION['cart.qty'] + $qty : $qty;
-            $_SESSION['cart.sum'] = isset($_SESSION['cart.sum']) ? $_SESSION['cart.sum'] + $qty * ($price * $_SESSION['cart.currency']['value']) : $qty * ($price * $_SESSION['cart.currency']['value']);
-           // debug($_SESSION);
+          // если товар уже добавлен в козину, добавить количество +qty
+          if(isset($_SESSION['cart'][$ID])){
+            $_SESSION['cart'][$ID]['qty'] += $qty;
+          }
+          else{   // если товара еще нет в корзине
+            $_SESSION['cart'][$ID] = [
+              'qty' => $qty,
+              'title' => $title,
+              'alias' => $product['alias'],
+              'price' => $price * $_SESSION['cart.currency']['value'],
+              'old_price' => $product['old_price'] * $_SESSION['cart.currency']['value'],
+              'img' => explode(',', $product['base_img'])[0]
+            ];
+          }
+          // суммарное количество и сумма
+          $_SESSION['cart.qty'] = isset($_SESSION['cart.qty']) ? $_SESSION['cart.qty'] + $qty : $qty;
+          $_SESSION['cart.sum'] = isset($_SESSION['cart.sum']) ? $_SESSION['cart.sum'] + $qty * ($price * $_SESSION['cart.currency']['value']) : $qty * ($price * $_SESSION['cart.currency']['value']);
+          // debug($_SESSION);
         }
 
-        public function changeCart($product, $operation, $mod = null)
+        public function changeCart($product, $operation, $prodData = null)
         {
-            if(isset($_SESSION['cart'][$product->id]))
+          if(isset($_SESSION['cart'][$prodData]))
+          {
+            if($operation == 'minus')
             {
-                if($operation == 'minus')
-                {
-                    if($_SESSION['cart'][$product->id]['qty'] > 1)
-                    {
-                        $_SESSION['cart'][$product->id]['qty']--;
-                        $_SESSION['cart.qty']--;
-                        $_SESSION['cart.sum'] -= $product->price*$_SESSION['cart.currency']['value'];
-                    }
-                }
-                elseif ($operation == 'plus')
-                {
-                    $_SESSION['cart'][$product->id]['qty']++;
-                    $_SESSION['cart.qty']++;
-                    $_SESSION['cart.sum'] += $product->price*$_SESSION['cart.currency']['value'];
-                }
+              if($_SESSION['cart'][$prodData]['qty'] > 1)
+              {
+                $_SESSION['cart'][$prodData]['qty']--;
+                $_SESSION['cart.qty']--;
+                $_SESSION['cart.sum'] -= $product->price*$_SESSION['cart.currency']['value'];
+              }
             }
+            elseif ($operation == 'plus')
+            {
+              $_SESSION['cart'][$prodData]['qty']++;
+              $_SESSION['cart.qty']++;
+              $_SESSION['cart.sum'] += $product->price*$_SESSION['cart.currency']['value'];
+            }
+          }
         }
 
 

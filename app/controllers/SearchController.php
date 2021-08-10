@@ -17,7 +17,7 @@ class SearchController extends AppController{
                                        product.price, product.alias
                                        FROM product 
                                        LEFT JOIN product_base_img ON product_base_img.product_id = product.id
-                                        WHERE product.status = 'visible' AND product.title LIKE ? GROUP BY product.id LIMIT 11", ["%{$query}%"]);
+                                        WHERE product.status = 'visible' AND (product.title LIKE ? OR product.vendor_code LIKE ?) GROUP BY product.id LIMIT 11", ["%{$query}%", "%{$query}%"]);
                 echo json_encode($products);
             }
         }

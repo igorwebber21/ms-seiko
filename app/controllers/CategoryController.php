@@ -19,6 +19,8 @@
             $alias = $this->route['alias'];
             $category = R::findOne('category', 'alias = ?', [$alias]);
 
+            $curr = \ishop\App::$app->getProperty('currency');
+
             if(!$category){
                 throw new \Exception('Страница не найдена', 404);
             }
@@ -42,6 +44,7 @@
             $filter = null; $sql_part = '';
             if(!empty($_GET['filter']))
             {
+                new \app\widgets\filter\Filter($filterData);
                 $filter = Filter::getFilter();
 
                 if($filter){
@@ -63,7 +66,9 @@
             $filterPrice = null;
             if(!empty($_GET['minPrice']) && $_GET['maxPrice'])
             {
-              $sql_part .= " AND product.price >= {$_GET['minPrice']} AND product.price <= {$_GET['maxPrice']} ";
+              $minPrice =  round($_GET['minPrice'] / $curr['value']);
+              $maxPrice =  round($_GET['maxPrice'] / $curr['value']);
+              $sql_part .= " AND product.price >= {$minPrice} AND product.price <= {$maxPrice} ";
             }
 
             // 5. find total (with filters) & get pagination
@@ -77,14 +82,27 @@
                                         WHERE product.category_id IN ($ids) AND product.status = 'visible' $sql_part
                                         GROUP BY product.id ORDER BY $productSortDB LIMIT $start, $perpage");
 
+            if($products){
+              for ($z=0; $z<count($products); $z++){
+                $getProductSizes = R::getAll("SELECT  GROUP_CONCAT(attribute_value.value) AS value
+                                                                  FROM attribute_value
+                                                                  LEFT JOIN attribute_product ON attribute_value.id = attribute_product.attr_id
+                                                                  WHERE attribute_product.product_id = {$products[$z]['id']} AND attribute_value.attr_group_id = 6");
+                $products[$z]['sizes'] = $getProductSizes[0]['value'];
+              }
+            }
+
+            $sizes = R::findAll("attribute_value", 'attr_group_id = ? ', [6]);
+
             $productRangeCount = ($perpage*($pagination->currentPage-1)+1) ." - ". ($perpage*($pagination->currentPage-1) + count($products));
+
 
             $filterPrice = R::getRow("SELECT MIN(price) AS minPrice, MAX(price) AS maxPrice
                   FROM `product` 
                   WHERE category_id IN($ids) AND status = 'visible'");
 
-            $filterData['minPrice'] = $filterPrice['minPrice'];
-            $filterData['maxPrice'] = $filterPrice['maxPrice'];
+            $filterData['minPrice'] = round($filterPrice['minPrice'] * $curr['value']);
+            $filterData['maxPrice'] = round($filterPrice['maxPrice'] * $curr['value']);
 
             if($this->isAjax())
             {
@@ -99,7 +117,7 @@
 
             $this->setMeta($category->title, $category->description, $category->keywords);
             $this->set(compact('breadcrumbs', 'category', 'products',
-                                        'pagination', 'total', 'perpage', 'productsPerPage',
+                                        'pagination', 'total', 'perpage', 'productsPerPage', 'sizes',
                                         'productsSort', 'sort', 'productRangeCount', 'productsMode', 'filterData'));
 
         }

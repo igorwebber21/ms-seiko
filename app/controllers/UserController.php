@@ -58,8 +58,53 @@
                 self::sendResponse($this->responseData);
             }
 
+
+          $this->set([]);
+
             $this->setMeta('Регистрация');
         }
+
+        // Добавить в избранное
+        public function favouritesAction()
+        {
+          if ($_POST['id'])
+          {
+
+            $productId = (int)$_POST['id'];
+
+            if($productId > 0)
+            {
+              $this->responseData['status'] = 1;
+
+              if(!isset($_SESSION['user']['favourites'][$productId]))
+              {
+                $_SESSION['user']['favourites'][$productId]['product_id'] = $productId;
+                $this->responseData['action'] = 'add';
+              }
+              else{
+                unset($_SESSION['user']['favourites'][$productId]);
+                $this->responseData['action'] = 'remove';
+              }
+
+              $this->responseData['count'] = count($_SESSION['user']['favourites']);
+            }
+            else{
+              $this->responseData['status'] = 0;
+              $this->responseData['message'] = '<p>Ошибка, товар не существует</p>';
+            }
+
+            self::sendResponse($this->responseData);
+
+          }
+        }
+
+        // очистить Избранное
+        public function clearFavouritesAction()
+        {
+          unset($_SESSION['user']['favourites']);
+          die;
+        }
+
 
         // Авторизация
         public function loginAction()
@@ -127,7 +172,22 @@
                 }
             }
 
-            $this->set(compact('orders'));
+            $favouritesIds = ''; $favouriteProducts = [];
+            if($_SESSION['user']['favourites'])
+            {
+              foreach ($_SESSION['user']['favourites'] as $id => $item){
+                $favouritesIds .= $id.',';
+              }
+
+              $favouritesIds = trim($favouritesIds, ',');
+              $favouriteProducts = R::getAll("SELECT *
+                                        FROM `product`
+                                        WHERE `product`.`id` IN($favouritesIds)");
+            }
+
+
+
+          $this->set(compact('orders', 'favouriteProducts'));
         }
 
         //========== user cabinet  ==========//
