@@ -116,9 +116,14 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="description">Краткое описание</label>
+                            <input type="text" name="short_desc" class="form-control" id="short_desc" placeholder="Краткое описание" value="<?= isset($_SESSION['form_data']['short_desc']) ? $_SESSION['form_data']['short_desc'] : null;?>">
+                        </div>
+
                         <div class="form-group has-feedback">
                             <label for="content">Контент</label>
-                            <textarea name="content" id="editorProduct" cols="80" rows="10"><?php isset($_SESSION['form_data']['old_price']) ? $_SESSION['form_data']['old_price'] : null; ?></textarea>
+                            <textarea name="content" id="editorProduct" cols="80" rows="10"><?php isset($_SESSION['form_data']['content']) ? $_SESSION['form_data']['content'] : null; ?></textarea>
                         </div>
 
                         <div class="form-group form-section-checkboxes form-section-bmt">

@@ -25,6 +25,7 @@
             </div>
             <?php endif; ?>
 
+            <?php if($minPrice < $maxPrice) : ?>
             <div class="sidebar-block collapsed open">
                 <div class="block-title">
                     <span>Цена</span>
@@ -41,6 +42,7 @@
                     <div class="bg-striped"></div>
                 </div>
             </div>
+            <?php endif; ?>
 
 <?php //debug($this->groups); debug($this->attrs);
     foreach($this->groups as $group_id => $group_item): ?>

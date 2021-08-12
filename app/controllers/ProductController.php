@@ -87,7 +87,7 @@
              }
            }
 
-            $this->setMeta($product->title, $product->description, $product->keywords);
+            $this->setMeta($product->title.' - интернет магазин MegaShop Demo', $product->description, $product->keywords);
             $this->set(compact('product', 'curr', 'cats', 'related', 'gallery', 'recentlyViewed', 'breadcrumbs', 'modes', 'productFiltersArr', 'sizes'));
         }
     }

@@ -1,6 +1,6 @@
 <?php
 
-define("DEBUG", 1);
+define("DEBUG", 0);
 define("ROOT", dirname(__DIR__));
 define("WWW", ROOT . '/public');
 define("APP", ROOT . '/app');
@@ -22,6 +22,8 @@ define("ADMIN", PATH . '/admin');
 
 define('UPLOAD_PRODUCT_BASE', '/upload/products/base/');
 define('UPLOAD_PRODUCT_GALLERY', '/upload/products/gallery/');
+define('UPLOAD_PRODUCT_THUMBS', '/upload/products/thumbs/');
+
 define('UPLOAD_CATEGORY_IMAGE', '/upload/categories/');
 define('UPLOAD_BLOG_PREVIEW', '/upload/blog/preview/');
 define('UPLOAD_BLOG_FULL', '/upload/blog/full/');
@@ -29,6 +31,8 @@ define('UPLOAD_BLOG_FULL', '/upload/blog/full/');
 
 define("PRODUCTIMG", PATH . UPLOAD_PRODUCT_BASE);
 define("GALLERYIMG", PATH . UPLOAD_PRODUCT_GALLERY);
+define("THUMBSIMG", PATH . UPLOAD_PRODUCT_THUMBS);
+
 define('CATEGORYIMG', PATH . UPLOAD_CATEGORY_IMAGE);
 define('BLOGPREVIEWIMG', PATH . UPLOAD_BLOG_PREVIEW);
 define('UPLOADBLOGFULL', PATH . UPLOAD_BLOG_FULL);

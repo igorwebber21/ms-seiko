@@ -28,7 +28,7 @@ class SearchController extends AppController{
     {
         $query = !empty(trim($_GET['s'])) ? trim($_GET['s']) : null;
 
-        $this->setMeta('Поиск по: ' . h($query));
+        $this->setMeta('Поиск по товарам: "' . h($query).'". Интернет магазин MegaShop Demo');
 
         // get product sort parameters
         $productsSort = App::$app->getProperty('productsSort');

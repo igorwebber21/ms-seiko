@@ -61,12 +61,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="keywords">Ключевые слова</label>
+                            <label for="keywords">Ключевые слова (keywords)</label>
                             <input type="text" name="keywords" class="form-control" id="keywords" placeholder="Ключевые слова">
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <div class="form-group">
-                            <label for="description">Описание</label>
+                            <label for="description">Описание (description)</label>
                             <input type="text" name="description" class="form-control" id="description" placeholder="Описание">
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>

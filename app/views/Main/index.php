@@ -52,7 +52,7 @@
                                 <div class="text3-3 animate" data-animate="bounceInDown" data-delay="1000">  </div>
                                 <div class="text3-4 animate" data-animate="bounceIn" data-delay="1500"> Админ </div>
                                 <div class="text3-5 animate" data-animate="bounceIn" data-delay="2500"> Панель </div>
-                                <a href="#" class="text3-6 animate" data-animate="rubberBand" data-delay="2500"> Попробуй сейчас </a>
+                                <a href="/admin" class="text3-6 animate" data-animate="rubberBand" data-delay="2500"> Попробуй сейчас </a>
                             </div>
                         </div>
                         <!-- <div class="swiper-slide" data-thumb="images/slider/slide-04-thumb.png">

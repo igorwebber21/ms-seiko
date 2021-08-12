@@ -68,6 +68,7 @@ class ProductController extends AppController
 
         unset($_SESSION['single']);
         unset($_SESSION['multi']);
+        unset($_SESSION['baseImg']);
 
         $this->setMeta('Новый товар');
     }
@@ -111,6 +112,7 @@ class ProductController extends AppController
 
         unset($_SESSION['single']);
         unset($_SESSION['multi']);
+        unset($_SESSION['baseImg']);
 
         $id = $this->getRequestID();
         $product = R::load('product', $id);
@@ -151,18 +153,16 @@ class ProductController extends AppController
 
             if($_POST['name'] == 'single')
             {
-                $vmax = App::$app->getProperty('img_width');
-                $hmax = App::$app->getProperty('img_height');
+              $vmax = App::$app->getProperty('img_width');
             }
             else
             {
-                $vmax = App::$app->getProperty('gallery_width');
-                $hmax = App::$app->getProperty('gallery_height');
+              $vmax = App::$app->getProperty('gallery_width');
             }
 
             $name = $_POST['name'];
             $product = new Product();
-            $product->uploadImg($name, $vmax, $hmax, $baseImg);
+            $product->uploadImg($name, $vmax, 0, $baseImg);
         }
     }
 
@@ -207,8 +207,9 @@ class ProductController extends AppController
 
         if(R::exec("DELETE FROM gallery WHERE product_id = ? AND img = ?", [$id, $src]))
         {
-            @unlink(WWW .UPLOAD_PRODUCT_GALLERY. $src);
-            exit('1');
+          @unlink(WWW .UPLOAD_PRODUCT_GALLERY. $src);
+          @unlink(WWW .UPLOAD_PRODUCT_THUMBS. $src);
+          exit('1');
         }
         return;
     }

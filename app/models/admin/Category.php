@@ -11,6 +11,7 @@ class Category extends AppModel
 
     public $attributes = [
         'title' => '',
+        'meta_title' => '',
         'parent_id' => '',
         'keywords' => '',
         'description' => '',

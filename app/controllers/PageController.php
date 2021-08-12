@@ -15,8 +15,10 @@ class PageController extends AppController
 
     $currPage = R::findOne('pages', 'alias = ?', [$this->route['alias']]);
     $currPage = object_to_array($currPage);
+
     if($currPage){
 
+      $this->setMeta($currPage['title'].' - интернет магазин MegaShop Demo', $currPage['title'], '');
     }
     else{
       throw new \Exception("Страница не найдена", 404);

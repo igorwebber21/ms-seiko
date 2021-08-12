@@ -128,6 +128,11 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="description">Краткое описание</label>
+                            <input type="text" name="short_desc" class="form-control" id="short_desc" placeholder="Краткое описание" value="<?=h($product->short_desc);?>">
+                        </div>
+
                         <div class="form-group has-feedback">
                             <label for="content">Контент</label>
                             <textarea class="form-control" name="content" id="editorProduct" cols="80" rows="30"><?=$product->content;?></textarea>

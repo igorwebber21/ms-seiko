@@ -4,6 +4,9 @@
 	align-items: center;
 }
 
+.exp-search{
+	overflow: visible;
+}
 
 .flex.top{
 	align-items: normal;
@@ -41,6 +44,10 @@
 	background: #fff;
 	border-color: #5972A7;
 	color: #5972A7;
+}
+
+.mb-15{
+	margin-bottom: 15px;
 }
 
 .icon-user.user-active:before{
@@ -125,6 +132,10 @@
 
 #userOrders .order-status{
    float: right;
+}
+
+.product-info-block.classic .product-options .option-label {
+min-width: 120px;
 }
 
 /* ==============   color change ============= */

@@ -3,6 +3,7 @@
 namespace app\models\admin;
 
 use app\models\AppModel;
+use ishop\libs\Thumbs;
 use RedBeanPHP\R;
 
 class Product extends AppModel {
@@ -15,6 +16,7 @@ class Product extends AppModel {
       'description' => '',
       'price' => '',
       'old_price' => '',
+      'short_desc' => '',
       'content' => '',
       'status' => '',
       'hit' => '',
@@ -196,17 +198,28 @@ class Product extends AppModel {
         }
         $new_name = md5(time()).".$ext";
         $uploadfile = $uploaddir.$new_name;
+
         if(@move_uploaded_file($_FILES[$name]['tmp_name'], $uploadfile))
         {
+            $thumbsObj = new Thumbs($uploadfile);
+            $thumbsObj->resize($wmax, $hmax);
+            $thumbsObj->save();
+
             if($name == 'single'){
-                $_SESSION['single'][] = $new_name;
-                if($baseImg == true){
-                  $_SESSION['baseImg'] = $new_name;
-                }
+              $_SESSION['single'][] = $new_name;
+              if($baseImg == true){
+                $_SESSION['baseImg'] = $new_name;
+              }
             }else{
-                $_SESSION['multi'][] = $new_name;
+              $_SESSION['multi'][] = $new_name;
+
+              // $thumbsMini
+              $thumbsObj->resize(150, 0);
+              $thumbsObj->save(WWW .'/upload/products/thumbs/'.$new_name);
+
+              //  self::resize(WWW .'/upload/products/thumbs/'.$new_name, $uploadfile, 80, 0, $ext);
             }
-            self::resize($uploadfile, $uploadfile, $wmax, $hmax, $ext);
+
             $res = array("file" => $new_name);
             exit(json_encode($res));
         }

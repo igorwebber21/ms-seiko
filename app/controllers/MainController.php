@@ -67,6 +67,10 @@
 
             $this->set(compact('brands', 'hits', 'curr', 'canonical', 'featuresProducts', 'sizes', 'articles', 'saleRandomProducts'));
 
+            $this->setMeta('Демо версия интернет магазина на системе управления MegaShop',
+                      'Интернет магазин от MegaShop: тестируй весь функционал на демо версии магазина',
+                       'магазин, интернет магазин, megashop, cms, движок');
+
         }
 
     }

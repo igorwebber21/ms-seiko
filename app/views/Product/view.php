@@ -39,7 +39,7 @@
                             <div class="product-previews-wrapper col-xs-2">
                                 <div class="product-previews-carousel" id="previewsGallery">
                                     <?php foreach ($gallery as $item): ?>
-                                    <a href="#" data-image="<?=GALLERYIMG.$item->img?>" data-zoom-image="<?=GALLERYIMG.$item->img?>"><img src="<?=GALLERYIMG.$item->img?>" alt="" /></a>
+                                    <a href="#" data-image="<?=UPLOAD_PRODUCT_GALLERY.$item->img?>" data-zoom-image="<?=UPLOAD_PRODUCT_GALLERY.$item->img?>"><img src="<?=UPLOAD_PRODUCT_THUMBS.$item->img?>" alt="" /></a>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="product-availability">Артикул: <span><?=$product->vendor_code?></span></div>
                         <div class="product-description">
-                            <p>Брюки из коллекции Medicine. Модель выполнена из гладкой ткани.</p>
+                            <p><?=$product->short_desc?></p>
                         </div>
                         <div class="product-options">
                             <?php if($productFiltersArr)://debug($productFiltersArr);
@@ -106,9 +106,11 @@
                                     <?php else:?>
 
                                         <div class="flex end">
-                                            <span class="option-label"><?php echo $filters['Title']?>:</span>
+                                            <span class="option-label"><?php echo $filters['Title']?>: </span>
                                             <div>
-                                               <?php foreach ($filters['Items'] as $item) echo $item['value']; ?>
+                                               <?php $filterAttrs = ''; foreach ($filters['Items'] as $item) $filterAttrs .= $item['value'].", ";
+                                               echo trim($filterAttrs, ', ');
+                                               ?>
                                             </div>
                                         </div>
 

@@ -22,10 +22,16 @@ class FeaturesController extends AppController
       case 'sale':
         $featuresQuery = "product.old_price != 0";
         $pageTitle = "Распродажа";
+        $pageMetaTitle = "Распродажа - товары со скидкой в интернет магазине MegaShop Demo";
+        $pageDescription = "Распродажа - товары со скидкой в интернет магазине MegaShop Demo";
+        $pageKeywords = "распродажа, сикдки, sale, магазин, megashop, цена";
         break;
       case 'new';
         $featuresQuery = "product.hit = 'yes'";
         $pageTitle = "Новинки";
+        $pageMetaTitle = "Новинки - новые поступления в интернет магазине MegaShop Demo";
+        $pageDescription = "Новинки - новые поступления в интернет магазине MegaShop Demo";
+        $pageKeywords = "новинки, товары, магазин, megashop, цена";
         break;
     }
 
@@ -114,7 +120,7 @@ class FeaturesController extends AppController
       die;
     }
 
-  //  $this->setMeta($category->title, $category->description, $category->keywords);
+    $this->setMeta($pageMetaTitle, $pageDescription, $pageKeywords);
     $this->set(compact('breadcrumbs', 'products',
       'pagination', 'total', 'perpage', 'productsPerPage', 'sizes', 'pageTitle',
       'productsSort', 'sort', 'productRangeCount', 'productsMode', 'filterData'));

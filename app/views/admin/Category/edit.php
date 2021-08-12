@@ -63,11 +63,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="keywords">Ключевые слова</label>
+                            <label for="keywords">Описание категории (title)</label>
+                            <input type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Описание категории (title)" value="<?=h($category->meta_title);?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="keywords">Ключевые слова (keywords)</label>
                             <input type="text" name="keywords" class="form-control" id="keywords" placeholder="Ключевые слова" value="<?=h($category->keywords);?>">
                         </div>
                         <div class="form-group">
-                            <label for="description">Описание</label>
+                            <label for="description">Описание (description)</label>
                             <input type="text" name="description" class="form-control" id="description" placeholder="Описание" value="<?=h($category->description);?>">
                         </div>
 

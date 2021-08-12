@@ -20,7 +20,10 @@ class BlogController extends  AppController
     $articles = R::getAll("SELECT * FROM articles
                                         WHERE status = 'visible' ORDER BY date_add DESC LIMIT $start, $perpage");
 
-    $this->setMeta('Блог');
+    $this->setMeta('Блог: новости интернет магазина MegaShop Demo',
+      'Статьи об одежде и моде. Интернет магазина MegaShop Demo',
+      'блог, одежда, мода, статьи, новости, megashop');
+
     $this->set(compact('articles', 'pagination', 'count'));
   }
 
@@ -32,8 +35,9 @@ class BlogController extends  AppController
     $lastArticles = R::getAll("SELECT * FROM articles
                                         WHERE status = 'visible' AND id != ".$article['id']." ORDER BY date_add DESC LIMIT 4");
 
-    //debug($article);
-    $this->setMeta('Блог');
+    $this->setMeta($article['name'],
+      substr($article['title'], 0, 250),
+      'блог, одежда, мода, статьи, новости, megashop');
 
     $this->set(compact('article', 'lastArticles'));
 

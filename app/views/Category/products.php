@@ -67,7 +67,8 @@
                     <!-- Product Details -->
                     <div class="product-item-details">
                         <div class="product-item-name"> <a title="Lace back mini dress" href="product/<?=$product['alias']?>" class="product-item-link"><?=$product['title']?></a> </div>
-                        <div class="product-item-description">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia nonkdni numquam eius modi tempora incidunt ut labore</div>
+                        <div class="product-item-description mb-15">Артикул: <strong><?=$product['vendor_code']?></strong></div>
+                        <div class="product-item-description mb-15"><?=$product['short_desc']?></div>
                         <div class="price-box">
                                         <span class="price-container">
                                             <span class="price-wrapper">

@@ -115,7 +115,8 @@
                 die;
             }
 
-            $this->setMeta($category->title, $category->description, $category->keywords);
+            $title = $category->meta_title ? $category->meta_title : $category->title;
+            $this->setMeta( $title.' - интернет магазин MegaShop Demo', $category->description, $category->keywords);
             $this->set(compact('breadcrumbs', 'category', 'products',
                                         'pagination', 'total', 'perpage', 'productsPerPage', 'sizes',
                                         'productsSort', 'sort', 'productRangeCount', 'productsMode', 'filterData'));

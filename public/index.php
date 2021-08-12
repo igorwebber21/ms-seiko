@@ -9,7 +9,6 @@ require_once CONF . '/routes.php';
 $app = new App();
 $router = new Router();
 
-//debug($_SESSION);
 //$app::$app->setProperty('property_id', 1);
 
 //debug($router::getRoutes());
